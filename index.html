@@ -1,233 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Will You Be My Valentine? 💕</title>
-  <style>
-    :root {
-      --pink: #ff85c2;
-      --dark-pink: #e065a3;
-      --bg: #fff0f5;
-      --text: #4a2c3f;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puttu ❤️ Will you be my Valentine?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --pink: #ff69b4;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        .heart-bg {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 105, 180, 0.15) 0%, transparent 50%);
+            background-size: 200px 200px;
+        }
 
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #fff0f5, #ffe4e9);
-      color: var(--text);
-      min-height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+        .modal {
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-    .hearts {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
+        .yes-text {
+            animation: bounce 2s infinite;
+        }
 
-    .heart {
-      position: absolute;
-      font-size: 1.8rem;
-      animation: float 8s linear infinite;
-      opacity: 0.7;
-    }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
 
-    @keyframes float {
-      0%   { transform: translateY(100vh) rotate(0deg); }
-      100% { transform: translateY(-15vh) rotate(360deg); }
-    }
+        .teddy-container {
+            animation: hug 3s infinite alternate ease-in-out;
+        }
 
-    .container {
-      text-align: center;
-      padding: 30px;
-      max-width: 90%;
-      z-index: 10;
-      background: rgba(255,255,255,0.75);
-      border-radius: 24px;
-      box-shadow: 0 10px 40px rgba(255,105,180,0.3);
-      backdrop-filter: blur(8px);
-      border: 2px solid rgba(255,182,193,0.6);
-    }
+        @keyframes hug {
+            0% { transform: scale(1) rotate(-8deg); }
+            100% { transform: scale(1.08) rotate(8deg); }
+        }
 
-    h1 {
-      font-size: 3.4rem;
-      color: var(--dark-pink);
-      margin-bottom: 1.5rem;
-      text-shadow: 0 2px 10px rgba(255,105,180,0.4);
-    }
+        .sticker {
+            animation: stickerFloat 4s infinite ease-in-out;
+        }
 
-    .emoji {
-      font-size: 4.5rem;
-      margin: 20px 0;
-      display: block;
-      animation: beat 1.4s infinite;
-    }
+        @keyframes stickerFloat {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            50% { transform: translateY(-20px) rotate(8deg); }
+        }
 
-    @keyframes beat {
-      0%, 100% { transform: scale(1); }
-      50%      { transform: scale(1.15); }
-    }
+        .gift-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .gift-card:hover {
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: 0 25px 50px -12px rgb(244 63 94);
+        }
 
-    .question {
-      font-size: 2.1rem;
-      margin: 30px 0 40px;
-      line-height: 1.4;
-    }
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatHeart 8s linear infinite;
+            opacity: 0.7;
+        }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
-    }
-
-    button {
-      font-size: 1.5rem;
-      padding: 18px 50px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: bold;
-    }
-
-    #yesBtn {
-      background: var(--pink);
-      color: white;
-      box-shadow: 0 6px 20px rgba(255,105,180,0.5);
-    }
-
-    #yesBtn:hover {
-      transform: scale(1.12);
-      background: #ff4da6;
-    }
-
-    #noBtn {
-      background: #e0e0e0;
-      color: #555;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-      position: relative;
-      transition: all 0.25s;
-    }
-
-    #noBtn:hover {
-      background: #ff9999;
-      color: white;
-    }
-
-    .message {
-      display: none;
-      margin-top: 50px;
-      font-size: 2.2rem;
-      color: var(--dark-pink);
-      animation: fadeIn 1.5s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2.6rem; }
-      .question { font-size: 1.7rem; }
-      button { font-size: 1.3rem; padding: 14px 40px; }
-      .emoji { font-size: 3.8rem; }
-    }
-  </style>
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
-
-  <div class="hearts" id="hearts"></div>
-
-  <div class="container">
-    <div class="emoji">💖</div>
-    <h1>Hey [Their Name / Cutie]!</h1>
+<body class="bg-gradient-to-br from-pink-100 via-rose-100 to-purple-100 min-h-screen overflow-hidden relative">
     
-    <div id="questionScreen">
-      <div class="question">
-        Will you be my Valentine? 💕<br>
-        <small>(no pressure... okay maybe a little 😭)</small>
-      </div>
+    <!-- Floating Hearts Background -->
+    <div id="hearts-container" class="absolute inset-0 pointer-events-none"></div>
 
-      <div class="buttons">
-        <button id="yesBtn">Yes! 💘</button>
-        <button id="noBtn">No 😢</button>
-      </div>
+    <!-- QUESTION SCREEN -->
+    <div id="question-screen" class="min-h-screen flex items-center justify-center heart-bg">
+        <div class="max-w-lg w-full mx-auto text-center px-6">
+            <!-- Main Card -->
+            <div class="bg-white rounded-3xl shadow-2xl p-12 border-8 border-pink-300">
+                <!-- Puttu Header -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-4xl font-bold px-10 py-4 rounded-2xl shadow-lg flex items-center gap-3">
+                        <span class="text-5xl">🐻</span>
+                        <span>Puttu</span>
+                    </div>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl font-bold title-font text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-rose-600 leading-tight mb-10">
+                    Will you be my<br>Valentine?
+                </h1>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <!-- YES Button -->
+                    <button onclick="sayYes()" 
+                            class="group bg-gradient-to-br from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white text-3xl font-bold py-6 px-16 rounded-3xl shadow-xl transform transition-all hover:scale-110 active:scale-95 flex items-center gap-4">
+                        <span>YES</span>
+                        <span class="text-5xl group-active:rotate-12 transition-transform">💖</span>
+                    </button>
+                    
+                    <!-- NO Button -->
+                    <button onclick="showHurtModal()" 
+                            class="group bg-white border-4 border-rose-400 hover:border-rose-500 text-rose-500 hover:text-rose-600 text-3xl font-bold py-6 px-16 rounded-3xl shadow-xl transform transition-all hover:scale-110 active:scale-95 flex items-center gap-4">
+                        <span>NO</span>
+                        <span class="text-5xl group-active:-rotate-12 transition-transform">😢</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Little footer note -->
+            <p class="text-pink-400 text-sm mt-8 font-medium">made with love for my favorite person ❤️</p>
+        </div>
     </div>
 
-    <div id="happyScreen" class="message">
-      <div class="emoji">🎉🥰💕</div>
-      <p>Yayyyy! You said YES!</p>
-      <p>I’m the luckiest person in the world right now 💗</p>
-      <p>Thank you for making my heart do little flips every day</p>
-      <p>Love you tons × infinity ♾️</p>
+    <!-- HURT MODAL -->
+    <div id="hurt-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+        <div class="modal bg-white rounded-3xl max-w-md w-full mx-4 overflow-hidden shadow-2xl">
+            <div class="p-10 text-center">
+                <div class="text-7xl mb-6">💔</div>
+                <h2 class="text-3xl font-bold text-rose-600 mb-4">Well that hurts...</h2>
+                <p class="text-xl text-gray-700 leading-relaxed">
+                    But let me show you the perks of being my valentine ❤️
+                </p>
+            </div>
+            
+            <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6">
+                <button onclick="hideHurtModal()" 
+                        class="w-full bg-white text-pink-600 font-bold text-2xl py-5 rounded-2xl hover:bg-pink-50 active:scale-95 transition-all">
+                    OKAY, SHOW ME ✨
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    // Floating hearts
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.innerHTML = ['❤️','💖','💕','💗','💞'][Math.floor(Math.random()*5)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
-      heart.style.fontSize = (Math.random() * 1.2 + 1.1) + 'rem';
-      document.getElementById('hearts').appendChild(heart);
-      
-      setTimeout(() => heart.remove(), 9000);
-    }
+    <!-- PERKS MODAL -->
+    <div id="perks-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+        <div class="modal bg-white rounded-3xl max-w-4xl w-full mx-4 overflow-hidden shadow-2xl">
+            <!-- Header -->
+            <div class="flex justify-between items-center border-b px-8 py-5 bg-gradient-to-r from-pink-50 to-rose-50">
+                <h2 class="text-3xl font-bold text-pink-600 title-font">Why you should consider me as your Valentine</h2>
+                <button onclick="closePerksModal()" 
+                        class="text-4xl text-gray-400 hover:text-rose-500 transition-colors">✕</button>
+            </div>
+            
+            <div class="p-10">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- PROS -->
+                    <div class="bg-pink-50 rounded-3xl p-8 border-4 border-pink-200">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="text-6xl">❤️</div>
+                            <div>
+                                <h3 class="text-4xl font-bold text-pink-600">PROS</h3>
+                                <p class="text-pink-400 text-sm">all the good stuff</p>
+                            </div>
+                        </div>
+                        
+                        <div id="pros-content" class="min-h-[180px] text-center">
+                            <div id="pros-text" class="text-2xl font-medium text-gray-700 leading-relaxed min-h-[120px] flex items-center justify-center"></div>
+                        </div>
+                        
+                        <div class="flex justify-center mt-6">
+                            <button onclick="nextPros()" 
+                                    class="bg-white border-2 border-pink-400 text-pink-500 hover:bg-pink-50 font-semibold px-10 py-3 rounded-2xl flex items-center gap-3 transition-all active:scale-95">
+                                NEXT PERK 
+                                <span class="text-xl">→</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- CONS -->
+                    <div class="bg-rose-50 rounded-3xl p-8 border-4 border-rose-200 flex flex-col">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="text-6xl">❌</div>
+                            <div>
+                                <h3 class="text-4xl font-bold text-rose-600">CONS</h3>
+                                <p class="text-rose-400 text-sm">literally nothing</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1 flex flex-col items-center justify-center">
+                            <div class="text-6xl font-bold text-emerald-500 mb-4">NOTHING!</div>
+                            <div class="text-2xl text-rose-400 font-medium">See? Told you ❤️</div>
+                            
+                            <!-- Blushing kid GIF -->
+                            <div class="mt-8">
+                                <img id="blush-gif" 
+                                     src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2J5c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3/26ufnwz3wDUli7GU0/giphy.gif" 
+                                     class="rounded-2xl shadow-lg w-48 h-48 object-cover mx-auto border-4 border-white" 
+                                     alt="blushing kid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6 text-center">
+                <button onclick="closePerksModal()" 
+                        class="bg-white text-pink-600 font-bold text-2xl py-4 px-16 rounded-2xl hover:bg-pink-50 active:scale-95 transition-all shadow-lg">
+                    I'M CONVINCED! 💕
+                </button>
+            </div>
+        </div>
+    </div>
 
-    setInterval(createHeart, 400);
+    <!-- YESSSS SCREEN -->
+    <div id="yes-screen" class="hidden min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+        <!-- Confetti layer -->
+        <div id="confetti" class="absolute inset-0 pointer-events-none"></div>
+        
+        <div class="text-center z-10">
+            <div class="yes-text">
+                <h1 class="text-[120px] md:text-[180px] font-black title-font leading-none text-transparent bg-clip-text bg-gradient-to-br from-pink-500 via-rose-500 to-purple-500 tracking-tighter">
+                    YESSSSS!
+                </h1>
+            </div>
+            
+            <div class="mt-6 flex items-center justify-center gap-4 text-6xl">
+                <span>💖</span>
+                <span>🥰</span>
+                <span>💖</span>
+            </div>
+            
+            <p class="text-4xl font-bold text-pink-600 mt-4 title-font">Best decision you ever made</p>
+            <p class="text-2xl text-rose-400 mt-1">in your entire life ✨</p>
+            
+            <!-- Teddy Bear -->
+            <div class="teddy-container my-12 flex justify-center">
+                <img id="teddy-gif" 
+                     src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3d5d3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3/3o7abKhO1m2jH8z3pS/giphy.gif" 
+                     class="w-80 h-80 object-contain drop-shadow-2xl" 
+                     alt="Teddy hugging">
+            </div>
+            
+            <!-- I Love You Sticker -->
+            <div class="sticker bg-white border-8 border-pink-400 rounded-3xl px-12 py-6 inline-flex items-center gap-6 shadow-2xl">
+                <span class="text-8xl">💌</span>
+                <div>
+                    <div class="text-5xl font-black text-pink-600 tracking-widest">I LOVE YOU</div>
+                    <div class="text-pink-400 text-2xl font-medium">— Puttu</div>
+                </div>
+                <span class="text-8xl">🐻</span>
+            </div>
+        </div>
+        
+        <!-- Gifts Link -->
+        <div onclick="showGifts()" 
+             class="mt-20 cursor-pointer group">
+            <div class="bg-white/80 backdrop-blur-lg border-4 border-dashed border-pink-300 rounded-3xl px-12 py-8 inline-flex items-center gap-6 hover:border-pink-500 transition-all">
+                <span class="text-4xl">🎁</span>
+                <div>
+                    <div class="text-pink-600 font-bold text-3xl group-hover:text-pink-700 transition-colors">Here is your virtual gifts for Valentine's Day, my love</div>
+                    <div class="text-pink-400 text-sm mt-1">click me →</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Back to question (hidden after) -->
+        <button onclick="resetToQuestion()" 
+                class="absolute bottom-8 text-pink-300 hover:text-pink-400 text-sm flex items-center gap-2">
+            <span>←</span> Start over
+        </button>
+    </div>
 
-    // Interaction logic
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn  = document.getElementById('noBtn');
-    const questionScreen = document.getElementById('questionScreen');
-    const happyScreen    = document.getElementById('happyScreen');
+    <!-- GIFTS PAGE -->
+    <div id="gifts-screen" class="hidden min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 py-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h1 class="text-7xl font-bold title-font text-pink-600">Your Valentine Gifts</h1>
+                    <p class="text-2xl text-rose-400">from your forever person 🐻</p>
+                </div>
+                <button onclick="backToYes()" 
+                        class="flex items-center gap-3 text-pink-500 hover:text-pink-600 font-medium">
+                    <span>← Back</span>
+                </button>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Gift 1 -->
+                <div onclick="openGift(1)" class="gift-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer border-4 border-transparent hover:border-pink-400 group">
+                    <div class="h-80 bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center relative">
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3/l2JJyK1v8h0Y7Q2zK/giphy.gif" 
+                             class="w-64 h-64 object-contain" alt="Couple hug">
+                        <div class="absolute top-4 right-4 bg-white/90 text-pink-600 text-xs font-bold px-4 py-1 rounded-full">GIFT 01</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold text-pink-600 mb-2">A Lifetime of Hugs</h3>
+                        <p class="text-gray-600">Redeemable 24×7, no expiry date 💕</p>
+                    </div>
+                </div>
+                
+                <!-- Gift 2 -->
+                <div onclick="openGift(2)" class="gift-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer border-4 border-transparent hover:border-pink-400 group">
+                    <div class="h-80 bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center relative">
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3/3o7TKsQ8j3vN4j7q2M/giphy.gif" 
+                             class="w-64 h-64 object-contain" alt="Couple hug">
+                        <div class="absolute top-4 right-4 bg-white/90 text-pink-600 text-xs font-bold px-4 py-1 rounded-full">GIFT 02</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold text-pink-600 mb-2">My Heart (in 4K)</h3>
+                        <p class="text-gray-600">Comes with unlimited selfies &amp; kisses 📸</p>
+                    </div>
+                </div>
+                
+                <!-- Gift 3 -->
+                <div onclick="openGift(3)" class="gift-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer border-4 border-transparent hover:border-pink-400 group">
+                    <div class="h-80 bg-gradient-to-br from-rose-400 to-pink-400 flex items-center justify-center relative">
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3/26BRv0R8o3l0iL7zW/giphy.gif" 
+                             class="w-64 h-64 object-contain" alt="Couple hug">
+                        <div class="absolute top-4 right-4 bg-white/90 text-pink-600 text-xs font-bold px-4 py-1 rounded-full">GIFT 03</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold text-pink-600 mb-2">Forever Yours</h3>
+                        <p class="text-gray-600">No returns, no exchanges, only love 💍</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    yesBtn.addEventListener('click', () => {
-      questionScreen.classList.add('hidden');
-      happyScreen.style.display = 'block';
-      
-      // Extra celebration hearts
-      for(let i = 0; i < 30; i++) {
-        setTimeout(createHeart, i * 80);
-      }
-    });
-
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (window.innerWidth - 200);
-      const y = Math.random() * (window.innerHeight - 200);
-      noBtn.style.position = 'absolute';
-      noBtn.style.left = x + 'px';
-      noBtn.style.top  = y + 'px';
-    });
-
-    noBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      alert("Wait... you weren't supposed to click that one 😭\nTry the other button pls 🥺");
-      noBtn.style.position = 'relative';
-      noBtn.style.left = 'auto';
-      noBtn.style.top = 'auto';
-    });
-  </script>
+    <script>
+        // Tailwind script already included
+        
+        let currentPros = 0;
+        const prosMessages = [
+            "I cook delicious meals for you as my love language 🍳❤️",
+            "Your personal professional photographer and reel machine 📸🎥",
+            "Your therapist, unlimited listening power 🫂",
+            "Unlimited hugs and kisses, mandatory 💋🐻"
+        ];
+        
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = ['❤️', '💖', '💗', '💓'][Math.floor(Math.random() * 4)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                heart.style.animationDelay = Math.random() * -15 + 's';
+                heart.style.fontSize = (Math.random() * 1.8 + 1.5) + 'rem';
+                container.appendChild(heart);
+            }
+        }
+        
+        function showHurtModal() {
+            document.getElementById('hurt-modal').classList.remove('hidden');
+        }
+        
+        function hideHurtModal() {
+            document.getElementById('hurt-modal').classList.add('hidden');
+            document.getElementById('perks-modal').classList.remove('hidden');
+            currentPros = 0;
+            updatePros();
+        }
+        
+        function updatePros() {
+            document.getElementById('pros-text').innerHTML = `
+                <div class="text-3xl leading-relaxed">
+                    ${prosMessages[currentPros]}
+                </div>
+            `;
+        }
+        
+        function nextPros() {
+            currentPros = (currentPros + 1) % prosMessages.length;
+            updatePros();
+        }
+        
+        function closePerksModal() {
+            document.getElementById('perks-modal').classList.add('hidden');
+            showYesScreen();
+        }
+        
+        function sayYes() {
+            showYesScreen();
+        }
+        
+        function showYesScreen() {
+            document.getElementById('question-screen').classList.add('hidden');
+            document.getElementById('yes-screen').classList.remove('hidden');
+            launchConfetti();
+        }
+        
+        function launchConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            confettiContainer.innerHTML = '';
+            
+            for (let i = 0; i < 80; i++) {
+                const c = document.createElement('div');
+                c.style.position = 'absolute';
+                c.style.width = '12px';
+                c.style.height = '12px';
+                c.style.borderRadius = '50%';
+                c.style.backgroundColor = ['#ec4899', '#f43f5e', '#a855f7', '#eab308'][Math.floor(Math.random()*4)];
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.top = '-20px';
+                c.style.opacity = Math.random() + 0.6;
+                c.style.animation = `fall ${Math.random() * 4 + 4}s linear forwards`;
+                confettiContainer.appendChild(c);
+                
+                setTimeout(() => c.remove(), 8000);
+            }
+        }
+        
+        // Add confetti animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fall {
+                to {
+                    transform: translateY(110vh) rotate(720deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        function showGifts() {
+            document.getElementById('yes-screen').classList.add('hidden');
+            document.getElementById('gifts-screen').classList.remove('hidden');
+        }
+        
+        function backToYes() {
+            document.getElementById('gifts-screen').classList.add('hidden');
+            document.getElementById('yes-screen').classList.remove('hidden');
+        }
+        
+        function openGift(n) {
+            const messages = [
+                "",
+                "🌹 Here's your first gift: A virtual bouquet of 1000 roses that never wilt. I picked each one thinking of you.",
+                "🎵 Gift 2: I made you a playlist of 50 songs that remind me of you. (It's in my heart, but I'll sing them to you every night)",
+                "🌙 Gift 3: A promise of endless midnight cuddles, forehead kisses, and 'I love you' texts at 3 AM."
+            ];
+            
+            alert(messages[n] + "\n\nWith all my love,\nPuttu 🐻");
+        }
+        
+        function resetToQuestion() {
+            location.reload();
+        }
+        
+        // Initialize
+        window.onload = function() {
+            createFloatingHearts();
+            
+            // Preload gifs
+            const teddy = new Image();
+            teddy.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3d5d3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3c3l3/3o7abKhO1m2jH8z3pS/giphy.gif";
+            
+            // Make sure modals are hidden
+            document.getElementById('hurt-modal').classList.add('hidden');
+            document.getElementById('perks-modal').classList.add('hidden');
+        };
+    </script>
 </body>
 </html>
