@@ -19,10 +19,16 @@
         .modal {
             animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        @keyframes popIn {
-            0% { transform: scale(0.7) translateY(40px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
+       @keyframes float {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(-120vh) translateX(var(--drift, 0)) rotate(20deg);
+        opacity: 0;
+    }
+}
         .gift-card {
             transition: all 0.4s ease;
         }
