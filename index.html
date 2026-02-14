@@ -191,17 +191,31 @@
                     </div>
                 </div>
 
-                <!-- Gift 3 - Love Letter -->
-                <div onclick="showLetter()" class="gift-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer">
-                    <div class="h-80 bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center">
-                        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYW5jb3NlcWNkd29qcW80ejBwZXFueWtxMHdqNWFwMzZ1bnN6eHQwbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3tESFsOZxN9qAJbfK8/giphy.gif" 
-                             class="w-64 h-64 object-contain" alt="couple">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-4xl font-bold text-pink-600 mb-3">Dear Arsh</h3>
-                        <p class="text-gray-600 text-lg">From my heart to yours 💌</p>
-                    </div>
-                </div> 
+               <!-- Love Letter Page -->
+<div id="letterPage" class="hidden min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 py-16">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="flex justify-between items-center mb-12">
+            <h1 class="text-6xl md:text-7xl font-bold text-rose-700">Dear Arsh</h1>
+            <button onclick="backToGifts()" 
+                    class="text-pink-600 hover:text-pink-800 text-xl font-medium flex items-center gap-2">
+                ← Back to Gifts
+            </button>
+        </div>
+
+        <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-10 md:p-16 border-4 border-pink-200">
+            <div class="prose prose-lg md:prose-2xl max-w-none text-gray-800 leading-relaxed font-medium">
+                <p>My dearest Arsh,</p>
+                
+                <p>Every single day with you feels like a gift I never knew I deserved. From the moment you smiled at me that first time, I knew my heart had found its home.</p>
+                
+                <p>You make ordinary moments magical — the way you laugh at my terrible jokes, how you steal half my blanket but still manage to look cute doing it, the little texts you send when I'm missing you.</p>
+                
+                <p>I promise to keep choosing you every day — through silly fights, late-night talks, quiet mornings, and every adventure we haven't even dreamed of yet.</p>
+                
+                <p>You are my safe place, my biggest cheerleader, my favorite person. Thank you for being you.</p>
+                
+                <p class="mt-10">Forever yours,<br>
+                <span class="text-4xl font-bold text-pink-600 block mt-4">Loyd (your Puttu) 🐻❤️</span></p>
             </div>
         </div>
     </div>
